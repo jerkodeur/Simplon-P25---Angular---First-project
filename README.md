@@ -1,4 +1,33 @@
-##### Simplon-P25---Angular---First-project
+- [Description du projet](#description-du-projet)
+- [Installation et exécution](#installation-et-exécution)
+- [Points clés du tuto](#points-clés-du-tuto)
+  - [Composants](#composants)
+  - [Directives](#directives)
+  - [Afficher des données dynamiques](#afficher-des-données-dynamiques)
+  - [Rendre les propriétés dynamiques](#rendre-les-propriétés-dynamiques)
+  - [Gérer des évènements](#gérer-des-évènements)
+  - [Transmettre des données à ses composants enfants](#transmettre-des-données-à-ses-composants-enfants)
+  - [Faire remonter des données vers le composant parent](#faire-remonter-des-données-vers-le-composant-parent)
+  - [Naviguer entre les pages](#naviguer-entre-les-pages)
+  - [Récupérer les paramêtres d'une route](#récupérer-les-paramêtres-dune-route)
+  - [Services](#services)
+    - [Définition](#définition)
+    - [Créer d'un service](#créer-dun-service)
+    - [Injecter un service](#injecter-un-service)
+  - [Modules](#modules)
+    - [Ajouter un module à l'application](#ajouter-un-module-à-lapplication)
+    - [Utiliser un module](#utiliser-un-module)
+  - [Formulaires](#formulaires)
+    - [FormBuilder module](#formbuilder-module)
+
+# Description du projet
+Afin de prendre en main le framework javascript Angular, il m'a été demandé de suivre le [tutoriel présent sur le site officiel](https://angular.io/start), et de présenter dans ce fichier les éléments qui me semble être important, ainsi que de la manière dont je les interprete.
+
+# Installation et exécution
+1. Cloner le projet
+2. Se placer dans le répertoire du projet
+3. Lancer la commande `npm install` afin d'installer les modules nécessaires
+4. Lancer le serveur et afficher la page sur son navigateur avec la commande `ng serve -o`
 # Points clés du tuto
 ## Composants
 - Chaque composant est crée par une ligne de commande
@@ -30,12 +59,14 @@ Lorsque l'on appelle un composant enfant, il est possible de lui faire passer de
 - Ajouter les données dans la propriété de l'élément parent qui pointe vers le composant enfant
 - Dans le composant parent, importer la classe _Input_
 - A l'initialisation du composant, définir les données entrantes
-##### Composant parent
+
+
+__Composant parent__
 ```html
 
 <mon-composant-enfant [item]="item"></mon-composant-enfant>
 ```
-##### Composant enfant
+__Composant enfant__
 ```js
 import {Input} from '@angular/core';
 
@@ -52,7 +83,7 @@ export class mon-composant-enfant implements OnInit {
 ## Faire remonter des données vers le composant parent
 Pour que le composant parent puisse répondre à un évènement se produisant dans un de ses composants enfants, Les composants enfant doivent pouvoir émettre cet évènement.
 
-##### Composant enfant
+__Composant enfant__
 ```js
 import {Output, EventEmitter} from '@angular/core';
 
@@ -65,7 +96,7 @@ export class mon-composant-enfant {
 <!-- Au clic, indique au composant parent que l'action à été déclenchée -->
 <button (click)="action.emit()">...</button>
 ```
-##### Composant parent
+__Composant parent__
 ```js
 export class mon-composant-parent {
   onAction() {
@@ -79,7 +110,7 @@ export class mon-composant-parent {
 
 ## Naviguer entre les pages
 L'on doit pouvoir se déplacer entre les différentes pages lorsque l'on clic sur les liens de l'application
-##### src/app/app.module.ts
+__src/app/app.module.ts__
 ```js
 @NgModule({
   imports: [
@@ -144,9 +175,10 @@ export class myComponent implements OnInit {
   }
 }
 ```
-## Ajouter un module à l'application
+## Modules
+### Ajouter un module à l'application
 Après avoir installer de nouveaux modules, ou afin de pouvoir en utiliser certains déjà existant dans Angular, il est nécessaire de l'ajouter dans l'application
-##### src/app/app.module.ts
+__src/app/app.module.ts__
 ```js
 // Importe le module à partir du dossier 'node_modules'
 import { HttpClientModule } from "@/angular/common/http";
@@ -161,6 +193,59 @@ import { HttpClientModule } from "@/angular/common/http";
 })
 ```
 
+### Utiliser un module
+```js
+import { HttpClientModule } from "@/angular/common/http";
 
+// Injecter le module dans le constructeur
+export class myClass {
+  constructor() {
+    private http: HttpClientModule
+}
+```
+
+## Formulaires
+### FormBuilder module
+Grâce au FormBuilder, l'on va pouvoir lier et récupérer les données saisies par les utilisateurs dans des formulaires présents dans nos pages HTML.
+__mon-composant.ts__
+```js
+// Importation du module
+import { FormBuilder } from "@angular/forms";
+
+// Injection du service dans le constructeur
+export class monComposent {
+  constructor(
+    private formBuilder = FormBuilder;
+  ) {}
+
+  // Création d'un objet qui va contenir les données du formulaire lié (instance de la classe FormGroup)
+  monFormulaire = this.formBuilder.group({
+    nom: '',
+    adresse: ''
+  });
+
+  // Méthode qui va être déclenchée lorsque l'utilisateur va soumettre le formulaire
+  onSubmit = ():void => {
+    // Récupération d'un objet contenant toutes les données soumises
+    console.log(this.monFormulaire.value);
+
+    // Récupération d'une des valeurs soumises
+    console.log(this.monFormulaire.value.nom);
+
+    // Effacer les données du formulaire
+    this.monFormulaire.reset();
+  }
+}
+```
+__mon-composant.html__
+```html
+  <!-- Liaison du formulaire et définition de la méthode à appeler lorsque le formulaire sera validé -->
+ <form [formGroup]="monFormulaire" (ngSubmit)="onSubmit()">
+   <!-- Liason de chacun des champs avec formControlName -->
+  <input type="text" id="nom" formControlName="nom">
+  <input type="text" id="adresse" formControlName="adresse">
+ <button class="button" type="submit">Soumettre</button>
+</form>
+``
 
 

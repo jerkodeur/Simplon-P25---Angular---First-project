@@ -10,6 +10,7 @@ import { ProductAlertsComponent } from './product-alerts/product-alerts.componen
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { ProductListComponent } from './product-list/product-list.component';
 import { TopBarComponent } from './top-bar/top-bar.component';
+import { ShippingComponent } from './shipping/shipping.component';
 
 @NgModule({
   imports: [
@@ -18,8 +19,9 @@ import { TopBarComponent } from './top-bar/top-bar.component';
     ReactiveFormsModule,
     RouterModule.forRoot([
       { path: '', component: ProductListComponent },
+      { path: 'cart', component: CartComponent},
       { path: 'products/:productId', component: ProductDetailsComponent },
-      { path: 'cart', component: CartComponent}
+      { path: 'shipping', component: ShippingComponent },
     ])
   ],
   declarations: [
@@ -28,7 +30,8 @@ import { TopBarComponent } from './top-bar/top-bar.component';
     ProductListComponent,
     ProductAlertsComponent,
     ProductDetailsComponent,
-    CartComponent
+    CartComponent,
+    ShippingComponent
   ],
   bootstrap: [
     AppComponent
