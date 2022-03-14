@@ -48,12 +48,12 @@ Interprète du code Js (fais des calculs, appelle une fonction, etc..)
 > `{{ Donnée }}`
 
 ## Rendre les propriétés dynamiques
-_Binding de propriété_
+_Binding de propriété_  
 Afin de pouvoir utiliser des variables comme valeurs de propriétés d'éléments HTML il suffit d'entourer la propriété par des accolades
 > `<a [title]="item.value">...</a>`
 
 ## Gérer des évènements
-_Binding d'évènement_
+_Binding d'évènement_  
 Il est possible d'écouter des évènements et de leurs attribuer des actions associées
 > `<button (click)="methodToCall">...</button>`
 
