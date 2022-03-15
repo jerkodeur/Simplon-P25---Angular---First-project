@@ -218,7 +218,7 @@ import { FormBuilder } from "@angular/forms";
 // Injection du service dans le constructeur
 export class monComposent {
   constructor(
-    private formBuilder = FormBuilder;
+    private formBuilder: FormBuilder;
   ) {}
 
   // Création d'un objet qui va contenir les données du formulaire lié (instance de la classe FormGroup)
